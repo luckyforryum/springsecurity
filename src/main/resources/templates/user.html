@@ -1,11 +1,40 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Spring Security Example</title>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<html lang="en">
 <body>
-<h1>User, welcome spring boot security page!</h1>
+<table border="1" >
+    <!--    <tr th:each="username :${thisUser}">-->
+
+    <!--    <h1>th:text="${username.getFirstname()}", welcome spring boot security page! </h1>-->
+    <!--        <h1 th:text="${thisUser.firstname} + ' ' + ${thisUser.lastname}">Пользователь</h1>-->
+    <!--        <p>Добро пожаловать на страницу безопасности Spring Boot!</p>-->
+    <h1 th:text="${thisUser.firstname + ', Добро пожаловать на страницу безопасности Spring Boot!'}">${thisUser.firstname} Добро пожаловать на страницу безопасности Spring Boot!</h1>
+    <br>
+    <br>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>LastName</th>
+        <th>Role</th>
+    <tr th:each="user :${thisUser}">
+
+        <td th:utext="${user.getId()}">Id</td>
+        <td th:utext="${user.getFirstname()}">Name</td>
+        <td th:utext="${user.getLastname()}">LastName</td>
+        <td th:utext="${user.getRoles}">Role</td>
+    </tr>
+
+</table>
 
 
+
+        <br>
+        <br>
+        <br>
+        <form action="/logout" method="GET">
+            <button type="submit">LOGOUT</button>
+        </form>
 </body>
+
+
 </html>
