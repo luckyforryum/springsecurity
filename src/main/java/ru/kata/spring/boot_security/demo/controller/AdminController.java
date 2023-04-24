@@ -17,15 +17,12 @@ import java.util.List;
 @Controller
 public class AdminController {
 
-//    private final UserDetailsImpl userDetails;
-//
-//    @Autowired
-//    public AdminController(UserDetailsImpl userDetails) {
-//        this.userDetails = userDetails;
-//    }
 
+    private final UserService userService;
     @Autowired
-    private UserService userService;
+    public AdminController(UserService userService) {
+        this.userService = userService;
+    }
 
 
     @GetMapping("/")
@@ -82,6 +79,4 @@ public class AdminController {
         userService.delete(id);
         return "redirect:/admin/showAllUsers";
     }
-
-
 }

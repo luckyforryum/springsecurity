@@ -1,14 +1,10 @@
 package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.kata.spring.boot_security.demo.model.UserEntity;
-import ru.kata.spring.boot_security.demo.repository.UserRepository;
-import ru.kata.spring.boot_security.demo.service.UserDetailsImpl;
 import ru.kata.spring.boot_security.demo.service.UserService;
-
 import java.security.Principal;
 
 
@@ -16,19 +12,12 @@ import java.security.Principal;
 @Controller
 public class UserController {
 
-//    private final UserDetailsImpl userDetails;
-//    private final AuthenticationManager authenticationManager;
-//    private final UserRepository userRepository;
-//
-//    @Autowired
-//    public UserController(UserDetailsImpl userDetails, AuthenticationManager authenticationManager, UserRepository userRepository) {
-//        this.userDetails = userDetails;
-//        this.authenticationManager = authenticationManager;
-//        this.userRepository = userRepository;
-//    }
 
+    private final UserService userService;
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
 
     @GetMapping("/user")

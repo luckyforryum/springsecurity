@@ -1,11 +1,9 @@
 package ru.kata.spring.boot_security.demo.dao;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.UserEntity;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -13,10 +11,13 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public class UserDaoImpl implements UserDao {
+    private final EntityManager entityManager;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    private EntityManager entityManager;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    public UserDaoImpl(EntityManager entityManager, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.entityManager = entityManager;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     public List<UserEntity> getAllUsers() {
