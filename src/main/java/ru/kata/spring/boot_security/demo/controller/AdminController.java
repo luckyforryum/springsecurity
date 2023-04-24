@@ -10,18 +10,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.kata.spring.boot_security.demo.model.UserEntity;
 import ru.kata.spring.boot_security.demo.service.UserDetailsImpl;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.List;
 
 @Controller
 public class AdminController {
 
-    private final UserDetailsImpl userDetails;
+//    private final UserDetailsImpl userDetails;
+//
+//    @Autowired
+//    public AdminController(UserDetailsImpl userDetails) {
+//        this.userDetails = userDetails;
+//    }
 
     @Autowired
-    public AdminController(UserDetailsImpl userDetails) {
-        this.userDetails = userDetails;
-    }
+    private UserService userService;
 
 
     @GetMapping("/")
@@ -38,7 +42,7 @@ public class AdminController {
 
     @GetMapping("/admin/showAllUsers")
     public String showAllUsers(Model model) {
-        List<UserEntity> allUsers = userDetails.listAll();
+        List<UserEntity> allUsers = userService.getAllUsers();
         model.addAttribute("allUsers",allUsers);
         return "all-users";
     }
@@ -52,7 +56,8 @@ public class AdminController {
 
     @PostMapping("/addNewUser")
     public String saveUser(@ModelAttribute("user") UserEntity user) {
-        userDetails.save(user);
+        System.out.println(user.getRoles());
+        userService.save(user);
 
         return "redirect:/admin/showAllUsers";
     }
@@ -60,21 +65,21 @@ public class AdminController {
 
     @GetMapping("/admin/showAllUsers/update-info/{userId}")
     public String edit(@PathVariable("userId") Long id, Model model) {
-        UserEntity user = userDetails.getUser(id);
+        UserEntity user = userService.getUser(id);
         model.addAttribute("user1",user);
         return "/update-info";
     }
 
     @PatchMapping("/update-info1")
     public String update(@ModelAttribute("user1") UserEntity user) {
-        userDetails.update(user);
+        userService.update(user);
         return "redirect:/admin/showAllUsers";
     }
 
 
     @DeleteMapping("/admin/showAllUsers/{userId}")
     public String deleteUser(@PathVariable("userId") Long id) {
-        userDetails.delete(id);
+        userService.delete(id);
         return "redirect:/admin/showAllUsers";
     }
 

@@ -18,57 +18,64 @@ import java.util.stream.Collectors;
 @Service
 public class UserDetailsImpl implements UserDetailsService {
 
-    private final BCryptPasswordEncoder passwordEncoder;
+//    private final BCryptPasswordEncoder passwordEncoder;
 
-    private final UserRepository userRepository;
+//    private final UserRepository userRepository;
+
+
+//    @Autowired
+//    public UserDetailsImpl(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository) {
+//        this.passwordEncoder = passwordEncoder;
+//
+//        this.userRepository = userRepository;
+//
+//    }
     @Autowired
-    public UserDetailsImpl(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository) {
-        this.passwordEncoder = passwordEncoder;
+    private UserService userService;
 
-        this.userRepository = userRepository;
-
-    }
+    @Autowired
+    private RoleService roleService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByUsername(username).orElseThrow(
+        UserEntity user = userService.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("User not found"));
-        return new User(user.getUsername(),user.getPassword(),mapRolesToAuthorities(user.getRoles()));
+        return new User(user.getUsername(),user.getPassword(),roleService.mapRolesToAuthorities(user.getRoles()));
 
     }
 
-    public UserEntity getInfoByUsername(String username) {
-        UserEntity user = userRepository.findByUsername(username).orElseThrow(
-                () -> new UsernameNotFoundException("User not found"));
-        return user;
-    }
-
-    private Collection<GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
-
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-    }
-
-
-    public List<UserEntity> listAll() {
-        return userRepository.findAll();
-    }
-
-
-    public  UserEntity save (UserEntity userEntity) {
-        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        return userRepository.save(userEntity);
-    }
-
-    public UserEntity update(UserEntity userEntity) {
-        return userRepository.save(userEntity);
-    }
-
-    public UserEntity getUser(Long id) {
-        return userRepository.getById(id);
-    }
-
-    public void delete (Long id) {
-        userRepository.deleteById(id);
-    }
+//    public UserEntity getInfoByUsername(String username) {
+//        UserEntity user = userRepository.findByUsername(username).orElseThrow(
+//                () -> new UsernameNotFoundException("User not found"));
+//        return user;
+//    }
+//
+//    private Collection<GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
+//
+//        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+//    }
+//
+//
+//    public List<UserEntity> listAll() {
+//        return userRepository.findAll();
+//    }
+//
+//
+//    public  UserEntity save (UserEntity userEntity) {
+//        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+//        return userRepository.save(userEntity);
+//    }
+//
+//    public UserEntity update(UserEntity userEntity) {
+//        return userRepository.save(userEntity);
+//    }
+//
+//    public UserEntity getUser(Long id) {
+//        return userRepository.getById(id);
+//    }
+//
+//    public void delete (Long id) {
+//        userRepository.deleteById(id);
+//    }
 
 }
