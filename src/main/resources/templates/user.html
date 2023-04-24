@@ -3,11 +3,7 @@
 <html lang="en">
 <body>
 <table border="1" >
-    <!--    <tr th:each="username :${thisUser}">-->
 
-    <!--    <h1>th:text="${username.getFirstname()}", welcome spring boot security page! </h1>-->
-    <!--        <h1 th:text="${thisUser.firstname} + ' ' + ${thisUser.lastname}">Пользователь</h1>-->
-    <!--        <p>Добро пожаловать на страницу безопасности Spring Boot!</p>-->
     <h1 th:text="${thisUser.firstname + ', Добро пожаловать на страницу безопасности Spring Boot!'}">${thisUser.firstname} Добро пожаловать на страницу безопасности Spring Boot!</h1>
     <br>
     <br>

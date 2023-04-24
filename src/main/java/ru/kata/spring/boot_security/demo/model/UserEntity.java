@@ -1,5 +1,4 @@
 package ru.kata.spring.boot_security.demo.model;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;

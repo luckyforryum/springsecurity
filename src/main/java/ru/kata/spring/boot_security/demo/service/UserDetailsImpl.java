@@ -1,6 +1,4 @@
 package ru.kata.spring.boot_security.demo.service;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,15 +8,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.UserEntity;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
-
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,14 +55,7 @@ public class UserDetailsImpl implements UserDetailsService {
 
 
     public  UserEntity save (UserEntity userEntity) {
-//        UserEntity user = new UserEntity();
-//        user.setFirstname(userEntity.getFirstname());
-//        user.setLastname(userEntity.getFirstname());
-//        user.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-//        userEntity.setRoles(Arrays.asList(new Role(userEntity.getRoles())));
-//        user.setRoles(Arrays.asList(new Role(userEntity.getRoles())));
         return userRepository.save(userEntity);
     }
 
@@ -79,11 +66,6 @@ public class UserDetailsImpl implements UserDetailsService {
     public UserEntity getUser(Long id) {
         return userRepository.getById(id);
     }
-
-//    public Optional<UserEntity> getUser(String username) {
-//        return userRepository.findByUsername(username);
-//    }
-
 
     public void delete (Long id) {
         userRepository.deleteById(id);

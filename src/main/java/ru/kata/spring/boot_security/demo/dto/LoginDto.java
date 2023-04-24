@@ -1,5 +1,4 @@
 package ru.kata.spring.boot_security.demo.dto;
-
 import java.util.Objects;
 
 public class LoginDto {
